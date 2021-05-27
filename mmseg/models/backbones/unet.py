@@ -1,13 +1,17 @@
 import torch.nn as nn
 import torch.utils.checkpoint as cp
-from mmcv.cnn import (UPSAMPLE_LAYERS, ConvModule, build_activation_layer,
-                      build_norm_layer, constant_init, kaiming_init)
+from mmcv.cnn import (ConvModule, build_activation_layer, build_norm_layer,
+                      constant_init, kaiming_init)
+from mmcv.cnn import UPSAMPLE_LAYERS as MMCV_UPSAMPLE_LAYERS
 from mmcv.runner import load_checkpoint
+from mmcv.utils import Registry
 from mmcv.utils.parrots_wrapper import _BatchNorm
 
 from mmseg.utils import get_root_logger
 from ..builder import BACKBONES
 from ..utils import UpConvBlock
+
+UPSAMPLE_LAYERS = Registry('upsample_layers', parent=MMCV_UPSAMPLE_LAYERS)
 
 
 class BasicConvBlock(nn.Module):
